@@ -177,10 +177,10 @@ void deleteContact(AddressBook *addressBook){
         {
             for (int j = i; j<addressBook->contactCount - 1; j++)
             {
-                addressBook->contacts[j] = addressBook->contactCount[j + 1];
+                addressBook->contacts[j] = addressBook->contacts[j + 1];
             }
             addressBook->contactCount--;
-            printf("Contact deleted Successfully\n");
+            printf("Contact Deleted Successfully\n");
             return;
         }
     }
