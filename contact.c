@@ -62,7 +62,24 @@ char* check_valid_email(char* email){
     return NULL;
 }
 
+void sort_by_name(AddressBook *addressBook){
 
+    // Bubble Sort Algorithm to sort contacts by name
+    for (int i = 0; i < addressBook->contactCount - 1; i++) {
+        for (int j = 0; j < addressBook->contactCount - i - 1; j++) {
+            if (strcmp(addressBook->contacts[j].name, addressBook->contacts[j + 1].name) > 0) {
+                // Swap contacts
+                Contact temp = addressBook->contacts[j];
+                addressBook->contacts[j] = addressBook->contacts[j + 1];
+                addressBook->contacts[j + 1] = temp;
+            }
+        }
+    }
+
+
+}
+
+//function to initialize address book
 void initialize(AddressBook *addressBook)
 {     //addressBook : just ptr variable of AddressBook 
 
@@ -72,7 +89,24 @@ void initialize(AddressBook *addressBook)
     
 }
 
+//function to list all contacts
 void listContacts(AddressBook *addressBook){
+
+    int choice;
+    printf("List Based on : \n1. Name\n2. Phone Number\n3. Email\n");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {   
+        case 1:
+        sort_by_name(addressBook);
+
+        default:
+        break;
+    }
+
+
+
     printf("%20s %20s %20s\n", "Name", "Phone No.", "Email");
     for (int i = 0; i<addressBook->contactCount; i++){
         printf("|%20s| %20s| %30s|\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
@@ -81,6 +115,7 @@ void listContacts(AddressBook *addressBook){
     }
 }
 
+//function to create new contact
 void createContact(AddressBook *addressBook){
 
     //check add. is full

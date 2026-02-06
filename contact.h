@@ -25,4 +25,6 @@ void initialize(AddressBook *addressBook);
 void saveContactsToFile(AddressBook *AddressBook);
 void saveAndExit(AddressBook *addressBook);
 
+void sort_by_name(AddressBook *addressBook);
+
 #endif
