@@ -15,6 +15,7 @@ char* check_valid_name(char* name){
     return name;
 }
 
+//function to check valid phone number
 char* check_valid_phone(char* phone)
 {
     int count = 0;
@@ -26,10 +27,39 @@ char* check_valid_phone(char* phone)
             return NULL;
         }
     }
+
+    printf("count %d\n", count);
     if (count != 10){
         return NULL;
     }
     return phone;
+}
+
+//function to check valid email
+char* check_valid_email(char* email){
+    int at_count = 0;
+    int dot_count = 0;
+
+    if (*email == '@' || *email == '.'){
+        printf("Email should not start with @ or .\n");
+        return NULL;
+    }
+
+    while (*email != '\0'){
+        if (*email == '@'){
+            at_count++;
+        }
+        if (*email == '.'){
+            dot_count++;
+        }
+        *email++; 
+    }
+
+    if (at_count == 1 && dot_count >= 1){
+        return email;
+    }
+
+    return NULL;
 }
 
 
@@ -45,7 +75,7 @@ void initialize(AddressBook *addressBook)
 void listContacts(AddressBook *addressBook){
     printf("%20s %20s %20s\n", "Name", "Phone No.", "Email");
     for (int i = 0; i<addressBook->contactCount; i++){
-        printf("|%20s| %20s| %20s|\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+        printf("|%20s| %20s| %30s|\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
         printf("-----------------------------------------------------------------------\n");
 
     }
@@ -78,21 +108,29 @@ void createContact(AddressBook *addressBook){
     do{
         printf("Enter Phone : ");
         scanf(" %[^\n]", new.phone);  //check alphabet should not come , and it should 10 digits contact number
-        if (check_valid_phone(new.phone)){
+        if (check_valid_phone(new.phone) == NULL){
             printf("Enter Valid Phone Number\n");
 
         } else{
             break;
         }
     } while(1);
-    
-   
 
+    do{
+        printf("Enter Email : ");
+        scanf(" %[^\n]", new.email);  //@ and . should be present @: not should on first . : should not come at first
+        if (check_valid_email(new.email) == NULL){
+            printf("Enter Valid Email\n");
+        }
+        else{
+            break;
+        }
+    }
+    while(1);
     
-    printf("Enter Email : ");
-    scanf(" %[^\n]", new.email);  //@ and . should be present @: not should on first . : should not come at first
-
     addressBook->contacts[addressBook->contactCount] = new;
+    addressBook->contactCount++;
+    printf("Sucsessfully Saved\n");
 
 
     // getchar();
@@ -104,8 +142,7 @@ void createContact(AddressBook *addressBook){
     // getchar();
     // printf("Enter Email : ");
     // scanf("%[^\n]", addressBook->contacts[addressBook->contactCount].email);
-    addressBook->contactCount++;
-    printf("Sucsessfully Saved\n");
+
     
 }
 
@@ -141,7 +178,7 @@ void searchContact(AddressBook *addressBook){
             if (strstr(addressBook->contacts[i].name, buffer))
             {
                 printf("Contact found\n");
-                printf("%20s %20s %20s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+                printf("%20s %20s %30s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
                 return;
             }
             
@@ -159,7 +196,7 @@ void searchContact(AddressBook *addressBook){
             if (strstr(addressBook->contacts[i].phone, buffer))
             {
                 printf("Phone found\n");
-                printf("%20s %20s %20s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+                printf("%20s %20s %30s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
                 return;
             }
         }
