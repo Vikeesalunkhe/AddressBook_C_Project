@@ -3,7 +3,38 @@
 #include <string.h>
 #include <stdio.h>
 
-void initialize(AddressBook *addressBook){     //addressBook : just ptr variable of AddressBook 
+//function to check valid Contact Name
+char* check_valid_name(char* name){
+    while(*name != '\0'){
+        if ((*name >= 'A' && *name <= 'Z') || (*name >= 'a' && *name <= 'z') || (*name == ' ')){
+            *name++;
+        }else{
+            return NULL;
+        }
+    }
+    return name;
+}
+
+char* check_valid_phone(char* phone)
+{
+    int count = 0;
+    while (*phone != '\0'){
+        if (*phone >= '0' && *phone <= '9'){
+            *phone++;
+            count++;
+        } else{
+            return NULL;
+        }
+    }
+    if (count != 10){
+        return NULL;
+    }
+    return phone;
+}
+
+
+void initialize(AddressBook *addressBook)
+{     //addressBook : just ptr variable of AddressBook 
 
     addressBook->contactCount = 0;
 
@@ -15,7 +46,7 @@ void listContacts(AddressBook *addressBook){
     printf("%20s %20s %20s\n", "Name", "Phone No.", "Email");
     for (int i = 0; i<addressBook->contactCount; i++){
         printf("|%20s| %20s| %20s|\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
-        printf("----------------------------------------------------------------------------------\n");
+        printf("-----------------------------------------------------------------------\n");
 
     }
 }
@@ -24,16 +55,40 @@ void createContact(AddressBook *addressBook){
 
     //check add. is full
     if (addressBook->contactCount == MAX_CONTACTS){
-        printf("Address Book not engough Space to Create More Contact\n");
+        printf("Address Book not Engough Space to Create More Contact\n");
         return;
     }
 
     Contact new;  //Contact new struct
+    char buffer[50];
 
-    printf("Enter Name : ");
-    scanf(" %[^\n]", new.name);  //check in name number should not come, if wrong check again for all conditions
-    printf("Enter Phone : ");
-    scanf(" %[^\n]", new.phone);  //check alphabet should not come , and it should 10 digits contact number
+
+    do{
+        printf("Enter Name : ");
+        scanf(" %[^\n]", new.name);  //check in name number should not come, if wrong check again for all conditions
+        if (check_valid_name(new.name) == NULL){
+            printf("Enter Valid Name\n");
+        }
+        else{
+            break;
+        }
+    }
+    while(1);
+
+    do{
+        printf("Enter Phone : ");
+        scanf(" %[^\n]", new.phone);  //check alphabet should not come , and it should 10 digits contact number
+        if (check_valid_phone(new.phone)){
+            printf("Enter Valid Phone Number\n");
+
+        } else{
+            break;
+        }
+    } while(1);
+    
+   
+
+    
     printf("Enter Email : ");
     scanf(" %[^\n]", new.email);  //@ and . should be present @: not should on first . : should not come at first
 
