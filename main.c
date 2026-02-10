@@ -38,7 +38,7 @@ int main()
                 listContacts(&addressBook);
                 break;
             case 6:
-                // savecontacts(&addressBook);
+                saveContactsToFile(&addressBook);
                 break;
             case 7:
                 exit(0);

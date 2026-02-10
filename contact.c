@@ -2,6 +2,7 @@
 #include "populate.h"
 #include <string.h>
 #include <stdio.h>
+#include "file.h"
 
 //function to check valid Contact Name
 char* check_valid_name(char* name){
@@ -107,7 +108,8 @@ void initialize(AddressBook *addressBook)
 
     addressBook->contactCount = 0;
 
-    populateAddressBook(addressBook);  //pass addess of Addressbook struct ptr
+    //populateAddressBook(addressBook);  //pass addess of Addressbook struct ptr
+    load_contacts_from_file(addressBook);
     
 }
 
