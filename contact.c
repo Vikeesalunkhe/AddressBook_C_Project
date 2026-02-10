@@ -75,8 +75,30 @@ void sort_by_name(AddressBook *addressBook){
             }
         }
     }
+}
 
+void sort_by_phone(AddressBook *addressBook){
+    for (int i = 0; i<addressBook->contactCount-1; i++){
+        for (int j = 0; j<addressBook->contactCount - i -1; j++){
+            if (strcmp(addressBook->contacts[j].phone, addressBook->contacts[j+1].phone) > 0){
+                Contact temp = addressBook->contacts[j];
+                addressBook->contacts[j] = addressBook->contacts[j+1];
+                addressBook->contacts[j+1] = temp;
+            }
+        }
+    }
+}
 
+void sort_by_email(AddressBook *addressBook){
+    for (int i = 0; i<addressBook->contactCount-1; i++){
+        for (int j = 0; j<addressBook->contactCount - i -1; j++){
+            if (strcmp(addressBook->contacts[j].email, addressBook->contacts[j+1].email) > 0){
+                Contact temp = addressBook->contacts[j];
+                addressBook->contacts[j] = addressBook->contacts[j+1];
+                addressBook->contacts[j+1] = temp;
+            }
+        }
+    }
 }
 
 //function to initialize address book
@@ -99,10 +121,17 @@ void listContacts(AddressBook *addressBook){
     switch (choice)
     {   
         case 1:
-        sort_by_name(addressBook);
-
+            sort_by_name(addressBook);
+            break;
+        case 2:
+            sort_by_phone(addressBook);
+            break;
+        case 3:
+            sort_by_email(addressBook);
+            break;
         default:
-        break;
+            printf("Initialize Default Contact\n");
+            break;
     }
 
 
